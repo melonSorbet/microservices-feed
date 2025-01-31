@@ -1,0 +1,16 @@
+services:
+  feed-service:
+    container_name: "feed-service"
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+    ports:
+      - "8020:8020"
+    stdin_open: true
+    tty: true
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
