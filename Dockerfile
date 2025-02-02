@@ -12,6 +12,8 @@ RUN go mod download
 # Copy the rest of the source code
 COPY . .
 
+RUN go build -o feed cmd/main.go
+
 # Expose port
 EXPOSE 8080
 

@@ -31,7 +31,7 @@ func GetFriendsFeed(w http.ResponseWriter, r *http.Request) {
 			all_posts = append(all_posts, posts[userIndex][postIndex])
 		}
 	}
-	sortPostsAfterCreationDate(all_posts)
+	SortPostsAfterCreationDate(all_posts)
 	response, err := json.Marshal(all_posts)
 	if err != nil {
 		fmt.Println(err)
@@ -41,7 +41,7 @@ func GetFriendsFeed(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(response))
 }
 
-func sortPostsAfterCreationDate(posts models.Post) {
+func SortPostsAfterCreationDate(posts models.Post) {
 	// Sort by CreatedAt using sort.Slice() with custom comparison logic
 	sort.Slice(posts, func(i, j int) bool {
 		// Compare CreatedAt times

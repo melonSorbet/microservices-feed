@@ -15,12 +15,14 @@ func GetFollowing(userId string) (models.Users, error) {
 
 		return models.Users{}, err
 	}
-	cool, err := CreateToken(userId)
+
+	token, err := CreateToken(userId)
 	if err != nil {
 		return models.Users{}, err
 	}
+
 	// Set custom headers
-	req.Header.Set("Authorization", cool)
+	req.Header.Set("Authorization", token)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

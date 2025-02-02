@@ -1,0 +1,211 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Feed API",
+    "version": "1.0.0",
+    "description": "API for managing user feeds and posts"
+  },
+  "paths": {
+    "/feed/friends": {
+      "get": {
+        "summary": "Get the feed of posts from users followed by the given userId",
+        "description": "This endpoint returns a list of posts from users that the specified userId follows. The feed is ordered by the newest posts first.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The userId of the user for whom the feed is being fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of posts from the followed users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_id": {
+                        "type": "string"
+                      },
+                      "caption": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "media": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "media_id": {
+                              "type": "string"
+                            },
+                            "file_url": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "integer"
+                            },
+                            "height": {
+                              "type": "integer"
+                            },
+                            "file_type": {
+                              "type": "string"
+                            },
+                            "original_file_name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["media_id", "file_url", "file_type"]
+                        }
+                      }
+                    },
+                    "required": [
+                      "post_id",
+                      "caption",
+                      "content",
+                      "username",
+                      "user_id",
+                      "created_at",
+                      "updated_at"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid userId supplied"
+          },
+          "404": {
+            "description": "User not found or no posts available"
+          }
+        }
+      }
+    },
+    "/feed/explore": {
+      "get": {
+        "summary": "Get the feed of posts related to given tags",
+        "description": "This endpoint returns a list of posts that are related to the tags provided in the query parameter. The feed is ordered by the newest posts first.",
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Comma-separated list of tags to filter posts by.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of posts related to the given tags",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_id": {
+                        "type": "string"
+                      },
+                      "caption": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "media": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "media_id": {
+                              "type": "string"
+                            },
+                            "file_url": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "integer"
+                            },
+                            "height": {
+                              "type": "integer"
+                            },
+                            "file_type": {
+                              "type": "string"
+                            },
+                            "original_file_name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["media_id", "file_url", "file_type"]
+                        }
+                      }
+                    },
+                    "required": [
+                      "post_id",
+                      "caption",
+                      "content",
+                      "username",
+                      "user_id",
+                      "created_at",
+                      "updated_at"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tags supplied"
+          },
+          "404": {
+            "description": "No posts found for the given tags"
+          }
+        }
+      }
+    }
+  }
+}
