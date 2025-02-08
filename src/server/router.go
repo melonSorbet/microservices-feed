@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func RouteServer() {
-	http.HandleFunc("GET /feed/friends", service.GetFriendsFeed)
-	http.HandleFunc("GET /feed/explore", service.GetExplorePage)
+func RouteServer(mux *http.ServeMux) {
+	mux.HandleFunc("/feed/friends", service.GetFriendsFeed)
+	mux.HandleFunc("/feed/explore", service.GetExplorePage)
 }
