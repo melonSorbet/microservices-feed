@@ -25,9 +25,29 @@ func GetFriendsFeed(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
+
 	var all_posts models.Post
 	for userIndex := 0; userIndex < len(posts); userIndex++ {
 		for postIndex := 0; postIndex < len(posts[userIndex]); postIndex++ {
+			for _, user := range users.Following {
+				if posts[userIndex][postIndex].UserID == user.UserID {
+					// Add user profile information to the post
+					posts[userIndex][postIndex].UserProfile = struct {
+						Username         string `json:"username"`
+						DisplayName      string `json:"display_name"`
+						ProfilePicURL    string `json:"profile_pic_url"`
+						ProfilePicWidth  int    `json:"profile_pic_width"`
+						ProfilePicHeight int    `json:"profile_pic_height"`
+					}{
+						Username:         user.Username,
+						DisplayName:      user.DisplayName,
+						ProfilePicURL:    user.ProfilePicURL,
+						ProfilePicWidth:  user.ProfilePicWidth,
+						ProfilePicHeight: user.ProfilePicHeight,
+					}
+					break
+				}
+			}
 			all_posts = append(all_posts, posts[userIndex][postIndex])
 		}
 	}
